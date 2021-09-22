@@ -2,7 +2,7 @@
 import CategoryApp from "./Components/CategoryApp"
 function App() {
   return (
-    <CategoryApp/>
+        <CategoryApp/>
   );
 }
 
