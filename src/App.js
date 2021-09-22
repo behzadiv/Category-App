@@ -1,10 +1,8 @@
   import './App.css';
-
+import CategoryApp from "./Components/CategoryApp"
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <CategoryApp/>
   );
 }
 
