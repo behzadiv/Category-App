@@ -11,42 +11,54 @@ const CategoryForm = () => {
     const products = useProducts()
     const setProducts = useProductsActions()
     
-    
-    const submitHandlerCategory=(e)=>{
-        e.preventDefault()
-        //console.log(categoryValue);
-        const newCategory = {value:categoryValue , label:categoryValue}
-        setOptions([...options,newCategory])
-        
-    }
     const selectHandler =(e)=>{
         console.log(e);
         setCategoryValue(e.value)
     }
-    const inputHandlerCategory = (e)=>{
-        setCategoryValue(e.target.value)
-    }
+
     
-    const inputHandlerProducts=(e)=>{
-        setProductValue(e.target.value)
+    
+    const submitHandler=(e)=>{
+        e.preventDefault()
+        switch (e.currentTarget.className) {
+            case "category":
+                return 
+                {const newCategory = {value:categoryValue , label:categoryValue}
+                setOptions([...options,newCategory])}
+                break;
+            case "product":
+                if(!categoryValue)return alert("please select your category")
+                return
+                {
+                    const newProduct ={name:productValue , category:categoryValue}
+                    setProducts([...products,newProduct])
+                }
+            default:
+                break;
+        }
+              
     }
-    const submitHandlerProduct=(e)=>{
-        e.preventDefault();
-        console.log(e.currentTarget.className);
-        if(!categoryValue)return alert("please select your category")
-        const newProduct ={name:productValue , category:categoryValue}
-        setProducts([...products,newProduct])
+    const inputHandler = (e)=>{
+        switch (e.currentTarget.className) {
+            case "category":
+                return setCategoryValue(e.target.value)
+                break;
+            case "product":
+                return setProductValue(e.target.value)
+            default:
+                break;
+        }
     }
-    console.log(products);
+
 
     return ( 
     <div>
-        <form onSubmit={submitHandlerCategory} className="category">
-            <input type="text" onChange={inputHandlerCategory} required/>
+        <form onSubmit={submitHandler} className="category">
+            <input type="text" onChange={inputHandler} required/>
             <button type="submit">+</button>
         </form>
-        <form onSubmit={submitHandlerProduct} className="product">
-            <input type="text" onChange={inputHandlerProducts} required/>
+        <form onSubmit={submitHandler} className="product">
+            <input type="text" onChange={inputHandler} required/>
             <button type="submit">+</button>
         </form>
         <Select 
