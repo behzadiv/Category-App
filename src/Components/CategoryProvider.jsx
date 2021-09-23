@@ -7,7 +7,11 @@ const categoryContextDispatcher = React.createContext()
 
 const CategoryProvider = ({children}) => {
     
-    const[category,setCategory]=useState()
+    const[category,setCategory]=useState([
+        {value:"Meat" , label:"Meat"},
+        {value:"Drink" , label:"Drink"}
+    ])
+    
     return (
         <categoryContext.Provider value={category}>
             <categoryContextDispatcher.Provider value={setCategory}>
@@ -20,3 +24,4 @@ const CategoryProvider = ({children}) => {
 export default CategoryProvider;
 export const useCategory =()=> useContext(categoryContext)
 export const useCategoryActions =()=> useContext(categoryContextDispatcher)
+  
