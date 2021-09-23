@@ -5,17 +5,24 @@ import React from 'react';
 const categoryContext = React.createContext()
 const categoryContextDispatcher = React.createContext()
 
+const productsContext = React.createContext()
+const productsContextDispatcher = React.createContext()
+
 const CategoryProvider = ({children}) => {
     
     const[category,setCategory]=useState([
         {value:"Meat" , label:"Meat"},
         {value:"Drink" , label:"Drink"}
     ])
-    
+    const[products,setProducts]=useState([])
     return (
         <categoryContext.Provider value={category}>
             <categoryContextDispatcher.Provider value={setCategory}>
-                {children}
+                <productsContext.Provider value={products}>
+                    <productsContextDispatcher.Provider value={setProducts}>
+                        {children}
+                    </productsContextDispatcher.Provider>
+                </productsContext.Provider>
             </categoryContextDispatcher.Provider>
         </categoryContext.Provider>
       );
@@ -24,4 +31,6 @@ const CategoryProvider = ({children}) => {
 export default CategoryProvider;
 export const useCategory =()=> useContext(categoryContext)
 export const useCategoryActions =()=> useContext(categoryContextDispatcher)
-  
+
+export const useProducts = ()=> useContext(productsContext)
+export const useProductsActions = ()=>useContext(productsContextDispatcher)
