@@ -1,64 +1,42 @@
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import Select from "react-select"
 import {useCategoryActions , useCategory ,useProducts , useProductsActions} from "./CategoryProvider"
+import ProductList from "./ProductList"
 const CategoryForm = () => {
     const[categoryValue,setCategoryValue]=useState("")
-    const[productValue,setProductValue]=useState("")
-    
+    const[filteredProducts,setFilteredProducts]=useState([])
     const options = useCategory()
-    const setOptions =useCategoryActions()
+    const products=useProducts()   
+    const{inputHandlerCategory,submitHandlerCategory}=useCategoryActions()
+    const{inputHandlerProduct,removeProduct,submitHandlerProduct}=useProductsActions()
+
     
-    const products = useProducts()
-    const setProducts = useProductsActions()
+    useEffect(()=>{
+        filterProduct(categoryValue)
+    },[products])
     
     const selectHandler =(e)=>{
         console.log(e);
         setCategoryValue(e.value)
+        filterProduct(e.value)
     }
-
+    const filterProduct=(value)=>{
+        const filtered = products.filter((p)=>p.category === value)
+        console.log(filtered);
+        setFilteredProducts(filtered)
+    }
     
     
-    const submitHandler=(e)=>{
-        e.preventDefault()
-        switch (e.currentTarget.className) {
-            case "category":
-                return 
-                {const newCategory = {value:categoryValue , label:categoryValue}
-                setOptions([...options,newCategory])}
-                break;
-            case "product":
-                if(!categoryValue)return alert("please select your category")
-                return
-                {
-                    const newProduct ={name:productValue , category:categoryValue}
-                    setProducts([...products,newProduct])
-                }
-            default:
-                break;
-        }
-              
-    }
-    const inputHandler = (e)=>{
-        switch (e.currentTarget.className) {
-            case "category":
-                return setCategoryValue(e.target.value)
-                break;
-            case "product":
-                return setProductValue(e.target.value)
-            default:
-                break;
-        }
-    }
 
 
     return ( 
     <div>
-        <form onSubmit={submitHandler} className="category">
-            <input type="text" onChange={inputHandler} required/>
+        <form onSubmit={submitHandlerCategory} className="category">
+            <input type="text" onChange={inputHandlerCategory} required id="category"/>
             <button type="submit">+</button>
         </form>
-        <form onSubmit={submitHandler} className="product">
-            <input type="text" onChange={inputHandler} required/>
+        <form onSubmit={(e)=>submitHandlerProduct(e,categoryValue)} className="product">
+            <input type="text" onChange={inputHandlerProduct} required id="product"/>
             <button type="submit">+</button>
         </form>
         <Select 
@@ -66,6 +44,7 @@ const CategoryForm = () => {
         options={options}
         onChange={selectHandler}
         />
+        <ProductList products={filteredProducts}/>
     </div> 
     );
 }
