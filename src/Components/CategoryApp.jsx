@@ -7,7 +7,7 @@ const CategoryApp = () => {
         <div>
             <CategoryProvider>
                 <CategoryForm />
-                
+                <ProductList/>
             </CategoryProvider>
         </div>
      );

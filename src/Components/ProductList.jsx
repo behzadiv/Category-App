@@ -1,9 +1,9 @@
 import {useProducts, useProductsActions} from "./CategoryProvider"
 import Product from "./Product"
-const ProductList = ({products}) => {
-    
-    
-    const{removeProduct}=useProductsActions()
+const ProductList = () => {
+    const products = useProducts()
+    const {removeProduct}=useProductsActions()
+    console.log(products);
     return ( 
         <div>
             {products.map((product)=>
