@@ -1,6 +1,143 @@
-body{
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
   background-color: aqua;
   width: 40rem;
-  text-align: center;
-  margin:5rem auto;
+  margin: 5rem auto;
+}
+.block {
+  padding: 0 2rem;
+}
+
+/* FORM */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.form-container section {
+  width: 80%;
+}
+.form-container label {
+  display: flex;
+  align-items: left;
+  margin-bottom: 0.2rem;
+}
+.add-product {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.add-product,
+.add-category {
+  background-color: #fff;
+  padding: 2rem;
+  margin: 0.4rem 0;
+}
+.category,
+.product {
+  width: 100%;
+}
+.select-options {
+  width: 100%;
+}
+.add-product_btn,
+.add-category_btn {
+  width: 100%;
+  background-color: #2684ff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  cursor: pointer;
+  font-size: medium;
+}
+
+.form-container input {
+  border: 1px solid hsl(0, 0%, 80%);
+  padding: 0.5rem 1rem;
+  font-size: large;
+  border-radius: 8px;
+}
+.form-container input:focus {
+  border: 2px solid #2684ff;
+  outline: none;
+}
+/* PRODUCTLIST */
+.go-back {
+  text-decoration: none;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  width: 15%;
+  justify-content: space-evenly;
+  margin-bottom: 0.5rem;
+}
+.product-container {
+  margin-top: rem;
+  background-color: rgba(255, 255, 255, 0.767);
+  border-radius: 20px;
+}
+.product-container-title {
+  color: #fff;
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(7, 8, 8);
+  padding: 1rem 2rem;
+  align-items: center;
+  border-radius: 20px 20px 0 0;
+}
+.product-item {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-around;
+}
+.product-item:nth-child(even) {
+  background-color: rgb(255, 255, 255);
+}
+.product-item:last-child {
+  border-radius: 0 0 20px 20px;
+}
+.sortBy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sort-select {
+  width: 100px;
+  margin-left: 1rem;
+  color: #000;
+}
+.empty-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+  height: 100px;
+}
+
+/* PRODUCT */
+.edit-btn {
+  width: 6rem;
+  padding: 0rem 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.edit-btn span {
+  background-color: rgba(216, 211, 211, 0.575);
+  padding: 0.2rem 0.4rem;
+  margin-right: 0.1rem;
+  cursor: pointer;
+  font-size: large;
+  font-weight: 500;
+  color: blue;
+}
+.edit-btn span:last-child{
+  color: red;
 }

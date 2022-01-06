@@ -37,8 +37,28 @@ export const useProductsActions = ()=>{
     const products = useProducts()
     const setProducts = useContext(productsContextDispatcher)
     const removeProduct = (id)=>{
-        const filteredProducts = products.filter((p)=>{return p.id !== id})
-        setProducts(filteredProducts)
+        const updatedProduct = [...products]
+        const updatedItemIndex = updatedProduct.findIndex((p)=> p.id === id)
+        const selectedProduct = {...updatedProduct[updatedItemIndex]}
+        if(selectedProduct.qty > 1){
+            selectedProduct.qty --;
+            updatedProduct[updatedItemIndex]=selectedProduct
+            return setProducts(updatedProduct)
+        }
+        else{
+
+            const filteredProducts = products.filter((p)=>p.id !== id)
+            setProducts(filteredProducts)
+        }
     }
-    return{removeProduct,setProducts}
+    const increment=(id)=>{
+        const updatedProduct = [...products]
+        const updatedItemIndex = updatedProduct.findIndex((p)=> p.id === id)
+        const selectedProduct = {...updatedProduct[updatedItemIndex]}
+        selectedProduct.qty ++ 
+        updatedProduct[updatedItemIndex]=selectedProduct
+        return setProducts(updatedProduct)
+        
+    }
+    return{removeProduct,setProducts,increment}
 }
