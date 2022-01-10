@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import Select from "react-select";
 import {
   useCategoryActions,
@@ -16,7 +16,7 @@ const CategoryForm = () => {
 
   const products = useProducts();
   const { setProducts } = useProductsActions();
-
+  
   const selectHandler = (e) => {
     console.log(e);
     setCategoryValue(e.value);
@@ -30,29 +30,34 @@ const CategoryForm = () => {
         setOptions([...options, newCategory]);
         break;
       case "product":
-        console.log(categoryValue);
+        //console.log(productValue);
         if (!categoryValue) return alert("please select your category");
-        if(categoryValue ==="All") return alert ("select valuable category")
+        if (categoryValue === "All") return alert("select valuable category");
+        const myArray = products.map(
+          (p) =>
+            p.name.toLocaleLowerCase().includes(productValue.toLocaleLowerCase()) && p.category.includes(categoryValue)
+        );
+        console.log(myArray);
+        console.log(myArray.indexOf(true));
         const newProduct = {
           name: productValue,
           category: categoryValue,
           id: Math.ceil(Math.random() * 100),
-          qty:1,
+          qty: 1,
         };
-        console.log(newProduct);
-        setProducts([...products, newProduct]);
-
-      default:
-        break;
+        myArray.indexOf(true) === -1
+          ? setProducts([...products, newProduct])
+          : console.log("this product is exist");
     }
   };
+
   const inputHandler = (e) => {
     switch (e.currentTarget.className) {
       case "category":
-         setCategoryValue(e.target.value);
+        setCategoryValue(e.target.value);
         break;
       case "product":
-          setProductValue(e.target.value);
+        setProductValue(e.target.value);
       default:
         break;
     }
@@ -70,7 +75,9 @@ const CategoryForm = () => {
               onChange={inputHandler}
               required
             />
-          <button type="submit" className="add-product_btn">Add product</button>
+            <button type="submit" className="add-product_btn">
+              Add product
+            </button>
           </form>
         </div>
         <div>
@@ -93,11 +100,12 @@ const CategoryForm = () => {
             required
             placeholder={categoryValue}
           />
-          <button type="submit" className="add-category_btn">add</button>
+          <button type="submit" className="add-category_btn">
+            add
+          </button>
         </form>
       </section>
       <Link to="/productList">Go to product lists...</Link>
-     
     </div>
   );
 };
