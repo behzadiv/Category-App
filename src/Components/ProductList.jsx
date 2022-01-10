@@ -17,26 +17,23 @@ const ProductList = () => {
   const trash = <FontAwesomeIcon icon={faTrashAlt}/>
   const products = useProducts();
   useEffect(()=>{
-    //console.log("ok");
-    //setFilteredProduct(products)
-    
+    setFilteredProduct(products)
+    const sortedValue = JSON.parse(localStorage.getItem("sortedValue"))
+    selectHandler(sortedValue)
     renderProductList()
   },[products])
   
   const { removeProduct,increment } = useProductsActions();
   const options = useCategory();
   const [filteredProduct, setFilteredProduct] = useState([]);
-  const [isSelected, setIsselected] = useState(false);
-  console.log(products);
-  //console.log(isSelected);
   const renderProductList=()=>{
-    return !products.length ?
+    return !filteredProduct.length ?
      (
       <p className="empty-text">There is no product in this category ...</p>
      )  
    :
     (
-     products.map((product) => (
+      filteredProduct.map((product) => (
        <Product
          product={product}
          key={product.id}
@@ -49,20 +46,18 @@ const ProductList = () => {
        />
      ))
    )}
-  // const selectHandler = (e) =>{
-  //   console.log(e.value);
-  //   console.log("select",products);
-  //   setIsselected(true);
-  //   if (e.value === "All") setFilteredProduct(products);
-  //   else{
-  //     const sortProducts = products.filter((p) => {
-  //       return p.category === e.value;
-  //     });
-  //     console.log("select2",sortProducts);
-  //     setFilteredProduct(sortProducts);
-  //     renderProductList()
-  //   }
-  // };
+  const selectHandler = (e) =>{
+    const sortedValue = {"value" : e.value}
+    localStorage.setItem("sortedValue",JSON.stringify(sortedValue))
+    if (e.value === "All") setFilteredProduct(products);
+    else{
+      const sortProducts = products.filter((p) => {
+        return p.category === e.value;
+      });
+      setFilteredProduct(sortProducts);
+      renderProductList()
+    }
+  };
  
  
   return (
@@ -72,15 +67,15 @@ const ProductList = () => {
         <div className="product-container-title">
           <span>Product</span>
           <span>Category</span>
-          {/* <div className="sortBy">
+          <div className="sortBy">
             <label htmlFor="">sort by </label>
             <Select
               className="sort-select"
               value={options.value}
               options={options}
-              // onChange={selectHandler}
+              onChange={selectHandler}
             />
-          </div> */}
+          </div>
         </div>
         {renderProductList()}
       </div>
