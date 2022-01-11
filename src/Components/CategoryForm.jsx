@@ -22,6 +22,9 @@ const CategoryForm = () => {
     setCategoryValue(e.value);
   };
 
+  useEffect(()=>{
+    options.map((opt)=>opt.value === "All" ? opt.isDisabled=true : null)
+  },[])
   const submitHandler = (e) => {
     e.preventDefault();
     switch (e.currentTarget.className) {

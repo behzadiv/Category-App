@@ -16,15 +16,18 @@ const ProductList = () => {
   const goback = <FontAwesomeIcon icon={faArrowCircleLeft} />
   const trash = <FontAwesomeIcon icon={faTrashAlt}/>
   const products = useProducts();
+  const options = useCategory();
+  
   useEffect(()=>{
     setFilteredProduct(products)
+    options.map((opt)=>opt.value === "All" ? opt.isDisabled=false : null)
     const sortedValue = JSON.parse(localStorage.getItem("sortedValue"))
     selectHandler(sortedValue)
     renderProductList()
   },[products])
   
   const { removeProduct,increment } = useProductsActions();
-  const options = useCategory();
+  
   const [filteredProduct, setFilteredProduct] = useState([]);
   const renderProductList=()=>{
     return !filteredProduct.length ?

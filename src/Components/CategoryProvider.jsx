@@ -11,7 +11,7 @@ const productsContextDispatcher = React.createContext()
 const CategoryProvider = ({children}) => {
     
     const[category,setCategory]=useState([
-        {value:"All" , label:"All"},
+        {value:"All" , label:"All" ,isDisabled:true},
         {value:"Meat" , label:"Meat"},
         {value:"Drink" , label:"Drink"}
     ])
