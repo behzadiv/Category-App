@@ -47,7 +47,7 @@ const ProductList = () => {
      ))
    )}
   const selectHandler = (e) =>{
-    const sortedValue = {"value" : e.value}
+    const sortedValue = {"value" : e ? e.value : "All"}
     localStorage.setItem("sortedValue",JSON.stringify(sortedValue))
     if (e.value === "All") setFilteredProduct(products);
     else{
