@@ -16,10 +16,8 @@ const CategoryForm = () => {
   const [productValue, setProductValue] = useState("");
 
   const options = useCategory();
-  const setOptions = useCategoryActions();
 
-  const products = useProducts();
-  const { setProducts } = useProductsActions();
+  const { addProduct, addCategory } = useProductsActions();
 
   const selectHandler = (e) => {
     console.log(e);
@@ -31,40 +29,19 @@ const CategoryForm = () => {
       opt.value === "All" ? (opt.isDisabled = true) : null
     );
   }, []);
+
   const submitHandler = (e) => {
     e.preventDefault();
     switch (e.currentTarget.className) {
       case "category":
-        const newCategory = { value: categoryValue, label: categoryValue };
-        console.log(options);
-        const checkedCategory = options.map((opt)=>opt.label.toLocaleLowerCase().includes(categoryValue.toLocaleLowerCase()))
-        return checkedCategory.indexOf(true)=== -1 ? 
-        (setOptions([...options, newCategory]),
-        toast.success(`${categoryValue} added in categories`),
+        addCategory(categoryValue);
         setCategoryValue("")
-        )
-        :
-        (toast.error(`${categoryValue} is exist !`))
         break;
 
       case "product":
-        if (!categoryValue) return toast.error("please select your category");
-        const checkedProduct = products.map(
-          (p) =>
-            p.name
-              .toLocaleLowerCase()
-              .includes(productValue.toLocaleLowerCase()) &&
-            p.category.includes(categoryValue)
-        );
-       const newProduct = {
-          name: productValue,
-          category: categoryValue,
-          id: Math.ceil(Math.random() * 100),
-          qty: 1,
-        };
-        return checkedProduct.indexOf(true) === -1
-          ? (setProducts([...products, newProduct]), toast.success(`${productValue} added to ${categoryValue}`),setProductValue(""))
-          : toast.error(`${productValue} is exist in ${categoryValue}`)
+        addProduct(productValue, categoryValue);
+        setProductValue("");
+        break;
     }
   };
 
@@ -119,12 +96,11 @@ const CategoryForm = () => {
             value={categoryValue}
           />
           <button type="submit" className="add-category_btn">
-            add
+            Add
           </button>
         </form>
       </section>
       <Link to="/productList">Go to product lists...</Link>
-     
     </div>
   );
 };

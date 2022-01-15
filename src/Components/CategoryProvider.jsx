@@ -39,6 +39,38 @@ export const useProducts = ()=> useContext(productsContext)
 export const useProductsActions = ()=>{
     const products = useProducts()
     const setProducts = useContext(productsContextDispatcher)
+    const options = useCategory();
+    const setOptions = useCategoryActions();  
+    const addProduct=(productValue,categoryValue)=>{
+        if (!categoryValue) return toast.error("please select your category");
+            const checkedProduct = products.map(
+              (p) =>
+                p.name
+                  .toLocaleLowerCase()
+                  .includes(productValue.toLocaleLowerCase()) &&
+                p.category.includes(categoryValue)
+            );
+           const newProduct = {
+              name: productValue,
+              category: categoryValue,
+              id: Math.ceil(Math.random() * 100),
+              qty: 1,
+            };
+            return checkedProduct.indexOf(true) === -1
+              ? (setProducts([...products, newProduct]), toast.success(`${productValue} added to ${categoryValue}`))
+              : toast.error(`${productValue} is exist in ${categoryValue}`);
+              
+      }
+    const addCategory = (categoryValue)=>{
+        const newCategory = { value: categoryValue, label: categoryValue };
+        const checkedCategory = options.map((opt)=>opt.label.toLocaleLowerCase().includes(categoryValue.toLocaleLowerCase()))
+        return checkedCategory.indexOf(true)=== -1 ? 
+        (setOptions([...options, newCategory]),
+        toast.success(`${categoryValue} added in categories`)
+        )
+        :
+        (toast.error(`${categoryValue} is exist !`))
+    }
     const removeProduct = (id)=>{
         const updatedProduct = [...products]
         const updatedItemIndex = updatedProduct.findIndex((p)=> p.id === id)
@@ -65,5 +97,5 @@ export const useProductsActions = ()=>{
         return setProducts(updatedProduct)
         
     }
-    return{removeProduct,setProducts,increment}
+    return{removeProduct,setProducts,increment,addProduct,addCategory}
 }
