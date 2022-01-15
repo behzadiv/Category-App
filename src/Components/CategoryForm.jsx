@@ -16,8 +16,10 @@ const CategoryForm = () => {
   const [productValue, setProductValue] = useState("");
 
   const options = useCategory();
-
+  const categories = useCategory();
+  console.log(categories);
   const { addProduct, addCategory } = useProductsActions();
+  const { removeCategory } = useCategoryActions();
 
   const selectHandler = (e) => {
     console.log(e);
@@ -35,7 +37,7 @@ const CategoryForm = () => {
     switch (e.currentTarget.className) {
       case "category":
         addCategory(categoryValue);
-        setCategoryValue("")
+        setCategoryValue("");
         break;
 
       case "product":
