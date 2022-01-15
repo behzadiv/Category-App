@@ -14,13 +14,13 @@ const CategoryProvider = ({ children }) => {
   const savedProducts = JSON.parse(localStorage.getItem("products"));
   const savedCategories = JSON.parse(localStorage.getItem("categories"));
   const [category, setCategory] = useState(
-    savedCategories.length > 3
+    savedCategories
       ? savedCategories
-      : ([{ value: "All", label: "All", isDisabled: true },
+      : ([{ value: "All", label: "All", isDisabled: true,id:0 },
         { value: "Meat", label: "Meat",id:1 },
         { value: "Drink", label: "Drink",id:2 }]),
   );
-  const [products, setProducts] = useState(savedProducts);
+  const [products, setProducts] = useState(savedProducts ? savedProducts : []);
 
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(products));
@@ -42,19 +42,36 @@ const CategoryProvider = ({ children }) => {
 export default CategoryProvider;
 export const useCategory = () => useContext(categoryContext);
 export const useCategoryActions = () =>{
-    const setCategory = useContext(categoryContextDispatcher);
-    const removeCategory = (e)=>{
-        console.log(e);
+    const setOptions = useContext(categoryContextDispatcher);
+    const options = useCategory();
+    const products = useProducts();
+    const setProducts = useContext(productsContextDispatcher);
+  
+    const addCategory = (categoryValue) => {
+      const newCategory = { value: categoryValue, label: categoryValue,id:Math.ceil(Math.random()*1000) };
+      const checkedCategory = options.map((opt) =>
+        opt.label.toLocaleLowerCase().includes(categoryValue.toLocaleLowerCase())
+      );
+      return checkedCategory.indexOf(true) === -1
+        ? (setOptions([...options, newCategory]),
+          toast.success(`${categoryValue} added in categories`),
+          console.log(options))
+        : toast.error(`${categoryValue} is exist !`);
+    };
+    const removeCategory = (categoryId ,categoryValue)=>{
+        const fiteredCategory=options.filter((opt)=>opt.id !== categoryId)
+        setOptions(fiteredCategory);
+        const filteredProducts= products.filter((p)=>p.category!==categoryValue)
+        setProducts(filteredProducts)
     }
-    return{setCategory,removeCategory}
+    return{addCategory,removeCategory}
 } 
 
 export const useProducts = () => useContext(productsContext);
 export const useProductsActions = () => {
   const products = useProducts();
   const setProducts = useContext(productsContextDispatcher);
-  const options = useCategory();
-  const setOptions = useCategoryActions();
+  
   const addProduct = (productValue, categoryValue) => {
     if (!categoryValue) return toast.error("please select your category");
     const checkedProduct = products.map(
@@ -73,17 +90,7 @@ export const useProductsActions = () => {
         toast.success(`${productValue} added to ${categoryValue}`))
       : toast.error(`${productValue} is exist in ${categoryValue}`);
   };
-  const addCategory = (categoryValue) => {
-    const newCategory = { value: categoryValue, label: categoryValue };
-    const checkedCategory = options.map((opt) =>
-      opt.label.toLocaleLowerCase().includes(categoryValue.toLocaleLowerCase())
-    );
-    return checkedCategory.indexOf(true) === -1
-      ? (setOptions([...options, newCategory]),
-        toast.success(`${categoryValue} added in categories`),
-        console.log(options))
-      : toast.error(`${categoryValue} is exist !`);
-  };
+ 
   const removeProduct = (id) => {
     const updatedProduct = [...products];
     const updatedItemIndex = updatedProduct.findIndex((p) => p.id === id);
@@ -109,5 +116,5 @@ export const useProductsActions = () => {
     updatedProduct[updatedItemIndex] = selectedProduct;
     return setProducts(updatedProduct);
   };
-  return { removeProduct, setProducts, increment, addProduct, addCategory };
+  return { removeProduct, setProducts, increment, addProduct };
 };

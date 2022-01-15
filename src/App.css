@@ -141,3 +141,27 @@ body {
 .edit-btn span:last-child{
   color: red;
 }
+
+/* CATEGORYLIST */
+
+.categoryList-container{
+ margin-top: 1.5rem;
+ width:100% ;
+ display: flex;
+ justify-content: space-evenly;
+ flex-wrap: wrap;
+}
+.category-item{
+  margin: .3rem 0;
+  padding:.3rem 1.2rem;
+  border: 1px solid rgb(233, 229, 229);
+  border-radius: 5px;
+  background-color: rgba(250, 246, 246, 0.938);
+  width: 45%;
+  display: flex;
+  justify-content: space-between;
+}
+.delete{
+  cursor: pointer;
+  color: red;
+}

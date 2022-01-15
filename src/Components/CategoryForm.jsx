@@ -10,16 +10,20 @@ import {
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { faTrashAlt} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CategoryForm = () => {
+  
   const [categoryValue, setCategoryValue] = useState("");
   const [productValue, setProductValue] = useState("");
 
   const options = useCategory();
   const categories = useCategory();
   console.log(categories);
-  const { addProduct, addCategory } = useProductsActions();
-  const { removeCategory } = useCategoryActions();
+  const products = useProducts()
+  const { addProduct } = useProductsActions();
+  const { removeCategory, addCategory } = useCategoryActions();
 
   const selectHandler = (e) => {
     console.log(e);
@@ -30,6 +34,12 @@ const CategoryForm = () => {
     options.map((opt) =>
       opt.value === "All" ? (opt.isDisabled = true) : null
     );
+    const sortedValue =JSON.parse(localStorage.getItem("sortedValue"))
+    const defaultSortedValue = {"value" :"All"}
+    sortedValue ?
+    localStorage.setItem("sortedValue",JSON.stringify(sortedValue))
+    :
+    localStorage.setItem("sortedValue",JSON.stringify(defaultSortedValue))
   }, []);
 
   const submitHandler = (e) => {
@@ -57,6 +67,16 @@ const CategoryForm = () => {
       default:
         break;
     }
+  };
+  const renderCategoryList = () => {
+     return categories.map((item) =>(
+      <Category 
+        key={item.id} 
+        item={item}
+        removeCategory={removeCategory}
+        products={products}
+      />
+    ));
   };
 
   return (
@@ -100,6 +120,7 @@ const CategoryForm = () => {
           <button type="submit" className="add-category_btn">
             Add
           </button>
+          <div className="categoryList-container">{renderCategoryList()}</div>
         </form>
       </section>
       <Link to="/productList">Go to product lists...</Link>
@@ -108,3 +129,20 @@ const CategoryForm = () => {
 };
 
 export default CategoryForm;
+
+const Category = ({item,removeCategory,products}) => {
+  const trash = <FontAwesomeIcon icon={faTrashAlt}/>
+  const filteredProduct =products.filter((p)=>p.category ===item.label )
+  return (
+    item.label !== "All" ? 
+      <div className="category-item">
+        <span>{item.label}</span>
+        <span>{filteredProduct.length}</span>
+        <span className="delete" onClick={() => removeCategory(item.id,item.label)}>{trash}
+        </span>  
+      </div>
+        :
+        null
+  )
+  
+};
