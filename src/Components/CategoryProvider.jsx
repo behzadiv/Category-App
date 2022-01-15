@@ -1,6 +1,8 @@
 import { Children, useContext, useState } from "react";
 import reactDom from "react-dom";
 import React from 'react';
+import { toast } from "react-toastify";
+import { faLaptopHouse } from "@fortawesome/free-solid-svg-icons";
 
 const categoryContext = React.createContext()
 const categoryContextDispatcher = React.createContext()
@@ -41,6 +43,7 @@ export const useProductsActions = ()=>{
         const updatedProduct = [...products]
         const updatedItemIndex = updatedProduct.findIndex((p)=> p.id === id)
         const selectedProduct = {...updatedProduct[updatedItemIndex]}
+       console.log(selectedProduct);
         if(selectedProduct.qty > 1){
             selectedProduct.qty --;
             updatedProduct[updatedItemIndex]=selectedProduct
@@ -50,6 +53,7 @@ export const useProductsActions = ()=>{
 
             const filteredProducts = products.filter((p)=>p.id !== id)
             setProducts(filteredProducts)
+            toast.warn(`${selectedProduct.name} deleted from ${selectedProduct.category}`)
         }
     }
     const increment=(id)=>{

@@ -7,6 +7,10 @@ import {
   useProducts,
   useProductsActions,
 } from "./CategoryProvider";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const CategoryForm = () => {
   const [categoryValue, setCategoryValue] = useState("");
   const [productValue, setProductValue] = useState("");
@@ -16,41 +20,51 @@ const CategoryForm = () => {
 
   const products = useProducts();
   const { setProducts } = useProductsActions();
-  
+
   const selectHandler = (e) => {
     console.log(e);
     setCategoryValue(e.value);
   };
 
-  useEffect(()=>{
-    options.map((opt)=>opt.value === "All" ? opt.isDisabled=true : null)
-  },[])
+  useEffect(() => {
+    options.map((opt) =>
+      opt.value === "All" ? (opt.isDisabled = true) : null
+    );
+  }, []);
   const submitHandler = (e) => {
     e.preventDefault();
     switch (e.currentTarget.className) {
       case "category":
         const newCategory = { value: categoryValue, label: categoryValue };
-        setOptions([...options, newCategory]);
+        console.log(options);
+        const checkedCategory = options.map((opt)=>opt.label.toLocaleLowerCase().includes(categoryValue.toLocaleLowerCase()))
+        return checkedCategory.indexOf(true)=== -1 ? 
+        (setOptions([...options, newCategory]),
+        toast.success(`${categoryValue} added in categories`),
+        setCategoryValue("")
+        )
+        :
+        (toast.error(`${categoryValue} is exist !`))
         break;
+
       case "product":
-        //console.log(productValue);
-        if (!categoryValue) return alert("please select your category");
-        if (categoryValue === "All") return alert("select valuable category");
-        const myArray = products.map(
+        if (!categoryValue) return toast.error("please select your category");
+        const checkedProduct = products.map(
           (p) =>
-            p.name.toLocaleLowerCase().includes(productValue.toLocaleLowerCase()) && p.category.includes(categoryValue)
+            p.name
+              .toLocaleLowerCase()
+              .includes(productValue.toLocaleLowerCase()) &&
+            p.category.includes(categoryValue)
         );
-        console.log(myArray);
-        console.log(myArray.indexOf(true));
-        const newProduct = {
+       const newProduct = {
           name: productValue,
           category: categoryValue,
           id: Math.ceil(Math.random() * 100),
           qty: 1,
         };
-        myArray.indexOf(true) === -1
-          ? setProducts([...products, newProduct])
-          : console.log("this product is exist");
+        return checkedProduct.indexOf(true) === -1
+          ? (setProducts([...products, newProduct]), toast.success(`${productValue} added to ${categoryValue}`),setProductValue(""))
+          : toast.error(`${productValue} is exist in ${categoryValue}`)
     }
   };
 
@@ -77,6 +91,7 @@ const CategoryForm = () => {
               className="product"
               onChange={inputHandler}
               required
+              value={productValue}
             />
             <button type="submit" className="add-product_btn">
               Add product
@@ -101,7 +116,7 @@ const CategoryForm = () => {
             className="category"
             onChange={inputHandler}
             required
-            placeholder={categoryValue}
+            value={categoryValue}
           />
           <button type="submit" className="add-category_btn">
             add
@@ -109,6 +124,7 @@ const CategoryForm = () => {
         </form>
       </section>
       <Link to="/productList">Go to product lists...</Link>
+     
     </div>
   );
 };

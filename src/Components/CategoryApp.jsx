@@ -2,6 +2,7 @@ import CategoryProvider from "./CategoryProvider";
 import CategoryForm from "./CategoryForm";
 import ProductList from "./ProductList";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 const CategoryApp = () => {
   return (
     <div className="block">
@@ -12,6 +13,7 @@ const CategoryApp = () => {
         </Routes>
         {/* <CategoryForm/>
         <ProductList/> */}
+         <ToastContainer/>
       </CategoryProvider>
     </div>
   );
