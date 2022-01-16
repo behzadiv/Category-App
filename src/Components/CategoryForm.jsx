@@ -10,18 +10,18 @@ import {
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { faTrashAlt} from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import capitalizeFirstLetter from "../utility/capitalizeFirstLetter";
 
 const CategoryForm = () => {
-  
   const [categoryValue, setCategoryValue] = useState("");
   const [productValue, setProductValue] = useState("");
 
   const options = useCategory();
   const categories = useCategory();
   console.log(categories);
-  const products = useProducts()
+  const products = useProducts();
   const { addProduct } = useProductsActions();
   const { removeCategory, addCategory } = useCategoryActions();
 
@@ -34,26 +34,29 @@ const CategoryForm = () => {
     options.map((opt) =>
       opt.value === "All" ? (opt.isDisabled = true) : null
     );
-    const sortedValue =JSON.parse(localStorage.getItem("sortedValue"))
-    const defaultSortedValue = {"value" :"All"}
-    sortedValue ?
-    localStorage.setItem("sortedValue",JSON.stringify(sortedValue))
-    :
-    localStorage.setItem("sortedValue",JSON.stringify(defaultSortedValue))
+    const sortedValue = JSON.parse(localStorage.getItem("sortedValue"));
+    const defaultSortedValue = { value: "All" };
+    sortedValue
+      ? localStorage.setItem("sortedValue", JSON.stringify(sortedValue))
+      : localStorage.setItem("sortedValue", JSON.stringify(defaultSortedValue));
   }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
     switch (e.currentTarget.className) {
-      case "category":
-        addCategory(categoryValue);
+      case "category": {
+        const newString = capitalizeFirstLetter(categoryValue);
+        addCategory(newString);
         setCategoryValue("");
         break;
+      }
 
-      case "product":
-        addProduct(productValue, categoryValue);
+      case "product": {
+        const newString = capitalizeFirstLetter(productValue);
+        addProduct(newString, categoryValue);
         setProductValue("");
         break;
+      }
     }
   };
 
@@ -69,9 +72,9 @@ const CategoryForm = () => {
     }
   };
   const renderCategoryList = () => {
-     return categories.map((item) =>(
-      <Category 
-        key={item.id} 
+    return categories.map((item) => (
+      <Category
+        key={item.id}
         item={item}
         removeCategory={removeCategory}
         products={products}
@@ -130,19 +133,19 @@ const CategoryForm = () => {
 
 export default CategoryForm;
 
-const Category = ({item,removeCategory,products}) => {
-  const trash = <FontAwesomeIcon icon={faTrashAlt}/>
-  const filteredProduct =products.filter((p)=>p.category ===item.label )
-  return (
-    item.label !== "All" ? 
-      <div className="category-item">
-        <span>{item.label}</span>
-        <span>{filteredProduct.length}</span>
-        <span className="delete" onClick={() => removeCategory(item.id,item.label)}>{trash}
-        </span>  
-      </div>
-        :
-        null
-  )
-  
+const Category = ({ item, removeCategory, products }) => {
+  const trash = <FontAwesomeIcon icon={faTrashAlt} />;
+  const filteredProduct = products.filter((p) => p.category === item.label);
+  return item.label !== "All" ? (
+    <div className="category-item">
+      <span>{item.label}</span>
+      <span>{filteredProduct.length}</span>
+      <span
+        className="delete"
+        onClick={() => removeCategory(item.id, item.label)}
+      >
+        {trash}
+      </span>
+    </div>
+  ) : null;
 };

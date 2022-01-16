@@ -50,7 +50,7 @@ export const useCategoryActions = () =>{
     const addCategory = (categoryValue) => {
       const newCategory = { value: categoryValue, label: categoryValue,id:Math.ceil(Math.random()*1000) };
       const checkedCategory = options.map((opt) =>
-        opt.label.toLocaleLowerCase().includes(categoryValue.toLocaleLowerCase())
+        opt.label.toLowerCase().includes(categoryValue.toLowerCase())
       );
       return checkedCategory.indexOf(true) === -1
         ? (setOptions([...options, newCategory]),
