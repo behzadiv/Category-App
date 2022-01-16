@@ -10,11 +10,13 @@ import {
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt,faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import capitalizeFirstLetter from "../utility/capitalizeFirstLetter";
 
 const CategoryForm = () => {
+  const goforward = <FontAwesomeIcon icon={faArrowAltCircleRight} />
+  
   const [categoryValue, setCategoryValue] = useState("");
   const [productValue, setProductValue] = useState("");
 
@@ -95,12 +97,7 @@ const CategoryForm = () => {
               required
               value={productValue}
             />
-            <button type="submit" className="add-product_btn">
-              Add product
-            </button>
-          </form>
-        </div>
-        <div>
+        <div className="select-category">
           <label htmlFor="">Select Category</label>
           <Select
             className="select-options"
@@ -108,6 +105,11 @@ const CategoryForm = () => {
             options={options}
             onChange={selectHandler}
           />
+        </div>
+            <button type="submit" className="add-product_btn">
+              Add product
+            </button>
+          </form>
         </div>
       </section>
       <section className="add-category">
@@ -126,7 +128,7 @@ const CategoryForm = () => {
           <div className="categoryList-container">{renderCategoryList()}</div>
         </form>
       </section>
-      <Link to="/productList">Go to product lists...</Link>
+      <Link to="/productList" className="go-forward"><span>Go to product lists</span><span>{goforward}</span></Link>
     </div>
   );
 };

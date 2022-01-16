@@ -71,7 +71,7 @@ const ProductList = () => {
           <span>Product</span>
           <span>Category</span>
           <div className="sortBy">
-            <label htmlFor="">sort by </label>
+            <label htmlFor="">sort</label>
             <Select
               className="sort-select"
               value={options.value}
