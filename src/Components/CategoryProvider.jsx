@@ -63,6 +63,7 @@ export const useCategoryActions = () =>{
         setOptions(fiteredCategory);
         const filteredProducts= products.filter((p)=>p.category!==categoryValue)
         setProducts(filteredProducts)
+        toast.warn(`${categoryValue} removed`)
     }
     return{addCategory,removeCategory}
 } 

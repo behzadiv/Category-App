@@ -133,16 +133,22 @@ const CategoryForm = () => {
 
 export default CategoryForm;
 
-const Category = ({ item, removeCategory, products }) => {
+const Category = ({ item, products,removeCategory }) => {
   const trash = <FontAwesomeIcon icon={faTrashAlt} />;
   const filteredProduct = products.filter((p) => p.category === item.label);
+  const requestRemoveCategory = (id, label) => {
+    if(window.confirm(`${label} Category Has ${filteredProduct.length > 1 ? `${filteredProduct.length} Products` : `${filteredProduct.length} Product`}\nAre You Sure To Delete ?`)){
+      removeCategory(id,label)
+    }
+    
+  };
   return item.label !== "All" ? (
     <div className="category-item">
       <span>{item.label}</span>
       <span>{filteredProduct.length}</span>
       <span
         className="delete"
-        onClick={() => removeCategory(item.id, item.label)}
+        onClick={() => requestRemoveCategory(item.id, item.label)}
       >
         {trash}
       </span>
