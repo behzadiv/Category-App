@@ -9,11 +9,11 @@ const Product = ({ product, onDelete ,onIncrement}) => {
     <div className="product-item">
       <span>{product.name}</span>
       <span>{product.category}</span>
-      <div className="edit-btn">
+      <span className="edit-btn">
         <span onClick={onIncrement} className="increment">+</span>
         <span>{product.qty}</span>
         <span onClick={onDelete} className="decrement">{product.qty> 1 ? "-" : trash}</span>
-      </div>
+      </span>
     </div>
   );
 };

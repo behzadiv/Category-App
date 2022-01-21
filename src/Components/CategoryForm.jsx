@@ -88,7 +88,7 @@ const CategoryForm = () => {
     <div className="form-container">
       <section className="add-product">
         <div>
-          <label htmlFor="">Add New Product</label>
+          <label htmlFor=""><h2>Add New Product</h2></label>
           <form className="product" onSubmit={submitHandler}>
             <input
               type="text"
@@ -98,7 +98,7 @@ const CategoryForm = () => {
               value={productValue}
             />
         <div className="select-category">
-          <label htmlFor="">Select Category</label>
+          <label htmlFor=""><h3>Select Category</h3></label>
           <Select
             className="select-options"
             value={options.value}
@@ -113,7 +113,7 @@ const CategoryForm = () => {
         </div>
       </section>
       <section className="add-category">
-        <label htmlFor="">Create New Category</label>
+        <label htmlFor=""><h2>Create New Category</h2></label>
         <form onSubmit={submitHandler} className="category">
           <input
             type="text"
@@ -128,8 +128,7 @@ const CategoryForm = () => {
           <div className="categoryList-container">{renderCategoryList()}</div>
         </form>
       </section>
-      <Link to="/productList" className="go-forward"><span>Go to product lists</span><span>{goforward}</span></Link>
-    </div>
+     </div>
   );
 };
 

@@ -9,7 +9,7 @@ import {
 import Product from "./Product";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowCircleLeft, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleLeft, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 
 const ProductList = () => {
@@ -65,12 +65,11 @@ const ProductList = () => {
  
   return (
     <>
-      <Link to="/" className="go-back"><span>{goback}</span><span>Go back</span></Link>
       <div className="product-container">
         <div className="product-container-title">
           <span>Product</span>
           <span>Category</span>
-          <div className="sortBy">
+          <span className="sortBy">
             <label htmlFor="">sort</label>
             <Select
               className="sort-select"
@@ -78,7 +77,7 @@ const ProductList = () => {
               options={options}
               onChange={selectHandler}
             />
-          </div>
+          </span>
         </div>
         {renderProductList()}
       </div>
