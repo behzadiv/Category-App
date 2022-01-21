@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../data/logo.gif"
+import Footer from "./Footer";
 const Header = () => {
   const menu = <FontAwesomeIcon icon={faBars} />;
   const crossBar = <FontAwesomeIcon icon={faTimes} />;
@@ -31,6 +32,7 @@ const Header = () => {
           <Link className="navbar-list-link" to="/"><span className="link-icon">{setting}<span className="link-name">Setting</span></span ></Link>
           <Link className="navbar-list-link" to="/"><span className="link-icon">{login}<span className="link-name">Login</span></span ></Link>
         </ul>
+        <div className="sidebar-footer"><Footer/></div>
       </div>
       <span onClick={showMenu} className="navbar-bars">
         {isShow ? crossBar : menu}

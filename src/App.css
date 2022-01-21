@@ -11,7 +11,7 @@ body {
 }
 :root {
   --btn: #3b82f6;
-  --footer: #373a36;
+  --footer: #50534fa6;
   --heading: #047857;
   --txt: #0f766e;
   --titleFontFamily:"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -244,6 +244,9 @@ body {
   transition: all 790ms ease-in-out;
   z-index: 3;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .navbar-list {
@@ -281,6 +284,14 @@ body {
 .show-menu .navbar-list-link:hover {
   background-color: #ecfeff;
   color: #000;
+}
+.sidebar-footer{
+  opacity: 0;
+  transition: opacity 790ms ease-out;
+  margin-bottom: 1rem;
+}
+.show-menu .sidebar-footer{
+  opacity: 1;
 }
 
 .navbar-bars {
@@ -333,6 +344,9 @@ body {
   .navbar-bars {
     display: none;
   }
+  .sidebar-footer{
+    display: none;
+  }
   .navbar {
     padding: 0;
     height: 70px;
@@ -359,10 +373,13 @@ body {
   }
   .navbar-list-link {
     width: 100%;
-    padding: 0;
+    padding: .3rem;
     color: #fff;
     font-size: larger;
     transition: all 600ms ease-in-out;
+  }
+  .navbar-list-link:hover{
+    color: green;
   }
   .link-icon {
     display: flex;
@@ -389,32 +406,7 @@ body {
     white-space: nowrap;
   }
 }
-/* @media only screen and (max-width: 500px) and (min-width: 450px){
-  .navbar-logo::after{
-  content: "Category-App";
-  margin-left: 30px;
-  display: flex;
-  align-items: center;
-  height: inherit;
-  transition: all 1s ease-in-out;
-}
-.navbar-logo {
-  background-image: url("./data/logo.gif");
-  background-repeat: no-repeat;
-  background-position:left;
-  margin-left:180px;
-  background-size: 20px;
-  flex: 1;
-  height: 30px;
-  white-space: nowrap;
-  transition: all 1s ease-in-out;
-}
-.hideLogoTitle{
-  background-position:left;
-  margin-left: 300px;
-}
 
-} */
 /* FOOTER */
 
 body::after {
@@ -423,13 +415,53 @@ body::after {
   display: block;
 }
 .footer {
-  position: fixed;
+  /* position: fixed; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  color: white;
+  bottom: 0%;
+  color: white;
+  padding: 2px 0;
+  font-size: xx-small;
+}
+.social-icons{
+  display: flex;
+  
+}
+.footer span {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  color:blue;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--footer);
-  height: 50px;
-  width: 100%;
-  color: white;
-  bottom: 0%;
+  font-size: small;
+  cursor: pointer;
+}
+.social-icons span:nth-child(even) a{
+  color: red;
+}
+.social-icons span:nth-child(even){
+  margin: 0 4px;
+}
+.social-icons span:first-child a{
+  color: blue;
+}
+.social-icons span:last-child a{
+  color: blueviolet;
+}
+
+@media only screen and (min-width: 600px) {
+
+  .footer{
+     position: fixed;
+     width: 100%;
+     background-color: var(--footer);
+  }
 }
