@@ -9,12 +9,13 @@ import {
 import Product from "./Product";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowCircleLeft, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faArrowCircleLeft, faTrashAlt ,faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 
 
 const ProductList = () => {
   const goback = <FontAwesomeIcon icon={faArrowCircleLeft} />
   const trash = <FontAwesomeIcon icon={faTrashAlt}/>
+  const add = <FontAwesomeIcon icon={faPlusCircle}/>
   const products = useProducts();
   const options = useCategory();
   
@@ -66,6 +67,10 @@ const ProductList = () => {
   return (
     <>
       <div className="product-container">
+        <div className="productList-heading">
+        <h2>Product List</h2>
+        <Link to="/" className="productList-addbtn">{add}</Link>
+        </div>
         <div className="product-container-title">
           <span>Product</span>
           <span>Category</span>

@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import capitalizeFirstLetter from "../utility/capitalizeFirstLetter";
 
 const CategoryForm = () => {
-  const goforward = <FontAwesomeIcon icon={faArrowAltCircleRight} />
   
   const [categoryValue, setCategoryValue] = useState("");
   const [productValue, setProductValue] = useState("");
@@ -83,7 +82,6 @@ const CategoryForm = () => {
       />
     ));
   };
-
   return (
     <div className="form-container">
       <section className="add-product">

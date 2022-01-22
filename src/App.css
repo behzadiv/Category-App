@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
 }
 body {
   background-color: aqua;
@@ -9,14 +10,15 @@ body {
   position: relative;
   height: 100%;
 }
+
 :root {
   --btn: #3b82f6;
   --footer: #50534fa6;
   --heading: #047857;
   --txt: #0f766e;
-  --titleFontFamily:"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --txtFontFamily: "SFMono-Regular", Consolas, "Liberation Mono",
-    Menlo, Courier, monospace;
+  --titleFontFamily: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --txtFontFamily: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
 }
 
 /* FORM */
@@ -31,13 +33,13 @@ body {
   padding-top: 2rem;
 }
 .form-container section {
-  width: 100%;
+  width: 80%;
 }
 .form-container label {
   display: flex;
   align-items: left;
   margin-bottom: 0.4rem;
-  font-size: small;
+  font-size: x-small;
   color: var(--heading);
   font-family: var(--titleFontFamily);
 }
@@ -47,7 +49,6 @@ body {
   justify-content: space-between;
   margin: 1rem;
 }
-
 .add-product,
 .add-category {
   background-color: #fff;
@@ -95,7 +96,10 @@ body {
 
 @media only screen and (min-width: 600px) {
   .form-container section {
-    width: 60%;
+    max-width: 500px;
+  }
+  .form-container label{
+    font-size: medium;
   }
   .form-container {
     padding-top: 5rem;
@@ -108,6 +112,27 @@ body {
   margin: 0 auto;
   padding-top: 3rem;
 }
+.productList-heading{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #ecfeff;
+  border-radius: 10px;
+  padding: 0 4rem;
+  margin: 1rem 0;
+  position: relative;
+  
+}
+.productList-addbtn{
+  font-size: x-large;
+}
+
+.product-container h2{
+  margin: 1rem 0;
+  text-align: center;
+  font-size: small;
+}
 .product-container-title {
   color: #fff;
   display: flex;
@@ -115,7 +140,7 @@ body {
   background-color: rgb(7, 8, 8);
   padding: 0.8rem 1rem;
   align-items: center;
-  font-size: small;
+  font-size: x-small;
 }
 .product-item {
   padding: 0.8rem 1rem;
@@ -163,7 +188,7 @@ body {
     width: 80%;
     padding-top: 5rem;
   }
-  .product-container-title {
+  .productList-heading h2{
     font-size: medium;
   }
   .product-item {
@@ -173,6 +198,12 @@ body {
     width: 100px;
     font-size: medium;
   }
+}
+@media only screen and (min-width: 400px) {
+  .product-container-title {
+    font-size: medium;
+  }
+
 }
 /* PRODUCT */
 .edit-btn {
@@ -184,17 +215,20 @@ body {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   cursor: default;
   border-radius: 5px;
+  font-size: medium;
+  color: black;
+  
 }
 .edit-btn span {
   padding: 0.2rem 0;
   margin-right: 0.4rem;
   cursor: pointer;
-  font-size: large;
-  font-weight: 400;
-  color: #000;
+  font-size:small ;
+  color: blue;
 }
 .edit-btn span:last-child {
   color: red;
+  font-size: medium;
 }
 
 /* CATEGORYLIST */
@@ -212,13 +246,20 @@ body {
   border: 1px solid rgb(233, 229, 229);
   border-radius: 5px;
   background-color: rgba(250, 246, 246, 0.938);
-  width: 45%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
 .delete {
   cursor: pointer;
   color: red;
+}
+
+@media only screen and (min-width: 400px) {
+  .category-item{
+    width: 45%;
+  }
+
 }
 
 /* NAVBAR */
@@ -262,7 +303,6 @@ body {
 .navbar-list-link {
   width: 100%;
   padding: 1rem;
-  text-decoration: none;
   margin-top: 0.4rem;
   color: #fff;
   font-size: larger;
@@ -285,12 +325,12 @@ body {
   background-color: #ecfeff;
   color: #000;
 }
-.sidebar-footer{
+.sidebar-footer {
   opacity: 0;
   transition: opacity 790ms ease-out;
   margin-bottom: 1rem;
 }
-.show-menu .sidebar-footer{
+.show-menu .sidebar-footer {
   opacity: 1;
 }
 
@@ -306,7 +346,7 @@ body {
 }
 .navbar-logo::after {
   content: "Category-App";
-  font-family: 'Brush Script MT';
+  font-family: "Brush Script MT";
   font-weight: 700;
   font-size: larger;
   margin-left: 130px;
@@ -344,7 +384,7 @@ body {
   .navbar-bars {
     display: none;
   }
-  .sidebar-footer{
+  .sidebar-footer {
     display: none;
   }
   .navbar {
@@ -373,12 +413,17 @@ body {
   }
   .navbar-list-link {
     width: 100%;
-    padding: .3rem;
+    padding: 0.3rem;
     color: #fff;
     font-size: larger;
     transition: all 600ms ease-in-out;
   }
-  .navbar-list-link:hover{
+  .show-menu .navbar-list-link:hover {
+    color: green;
+    background-color: initial;
+  }
+  .navbar-list-link:hover,
+  .navbar-list-link:focus {
     color: green;
   }
   .link-icon {
@@ -427,9 +472,8 @@ body::after {
   padding: 2px 0;
   font-size: xx-small;
 }
-.social-icons{
+.social-icons {
   display: flex;
-  
 }
 .footer span {
   width: 20px;
@@ -437,31 +481,30 @@ body::after {
   background-color: white;
   border: none;
   border-radius: 50%;
-  color:blue;
+  color: blue;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: small;
   cursor: pointer;
 }
-.social-icons span:nth-child(even) a{
+.social-icons span:nth-child(even) a {
   color: red;
 }
-.social-icons span:nth-child(even){
+.social-icons span:nth-child(even) {
   margin: 0 4px;
 }
-.social-icons span:first-child a{
+.social-icons span:first-child a {
   color: blue;
 }
-.social-icons span:last-child a{
+.social-icons span:last-child a {
   color: blueviolet;
 }
 
 @media only screen and (min-width: 600px) {
-
-  .footer{
-     position: fixed;
-     width: 100%;
-     background-color: var(--footer);
+  .footer {
+    position: fixed;
+    width: 100%;
+    background-color: var(--footer);
   }
 }
