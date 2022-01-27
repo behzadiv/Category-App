@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { faTrashAlt,faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import capitalizeFirstLetter from "../utility/capitalizeFirstLetter";
-
+import swal from 'sweetalert';
 const CategoryForm = () => {
   
   const [categoryValue, setCategoryValue] = useState("");
@@ -136,10 +136,13 @@ const Category = ({ item, products,removeCategory }) => {
   const trash = <FontAwesomeIcon icon={faTrashAlt} />;
   const filteredProduct = products.filter((p) => p.category === item.label);
   const requestRemoveCategory = (id, label) => {
-    if(window.confirm(`${label} Category Has ${filteredProduct.length > 1 ? `${filteredProduct.length} Products` : `${filteredProduct.length} Product`}\nAre You Sure To Delete ?`)){
-      removeCategory(id,label)
-    }
-    
+    swal({
+      title: "Are you sure to delete ?",
+      text: `${label} Has ${filteredProduct.length > 1 ? `${filteredProduct.length} Products` : `${filteredProduct.length} Product`}`,
+      icon: "warning",
+      buttons: true,
+      dangerMode:true,
+    }).then((value)=>{if(value)removeCategory(id,label)});
   };
   return item.label !== "All" ? (
     <div className="category-item">
